@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar primary>
+    <ion-title>
+      IonHN
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="about">
+  <ion-list>
+    <button (click)="goTo(job.url)" ion-item *ngFor="let job of jobs">
+      <h2>{{job.title}}</h2>
+      <h3>Poster: {{job.by}}</h3>
+      <p>{{job.url}}</p>
+    </button>
+  </ion-list>
+</ion-content>

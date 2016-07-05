@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar primary>
+    <ion-title>IonHN</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="home">
+  <ion-list>
+    <ion-item *ngFor="let story of stories">
+      <div (click)="open(story.url)">
+        <h2>{{story.title}}</h2>
+        <h3>Author: {{story.by}} on {{story.time | unixDate | date}}</h3>
+        <p>{{story.url}}</p>
+      </div>
+
+      <button *ngIf="story.kids" id="commentsButton" (click)="getComments(story.kids)" clear primary>
+        {{story.kids.length}} Comments
+      </button>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
