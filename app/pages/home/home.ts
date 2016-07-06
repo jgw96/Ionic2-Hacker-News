@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { NavController, Loading } from "ionic-angular";
+import {SocialSharing} from 'ionic-native';
 
 import { StoriesService } from "../../providers/stories/stories";
 import { CommentsPage } from "../../pages/comments/comments";
@@ -34,8 +35,9 @@ export class HomePage {
           data => {
             this.storyIDs = data;
             console.log(data);
-            this.previousIndex = 480;
-            for (let i = 0; i < this.storyIDs.length - this.previousIndex; i++) {
+            this.previousIndex = this.storyIDs.length - 20;
+            console.log(this.previousIndex)
+            for (let i = 0; i < 20; i++) {
               this.storiesService.getStory(data[i])
                 .subscribe(
                 data => {
@@ -80,6 +82,10 @@ export class HomePage {
     }
     infiniteScroll.complete();
     this.previousIndex = newIndex;
+  }
+
+  private share(url: string) {
+    SocialSharing.share("Check out this cool article!", null, null, url);
   }
 
 }

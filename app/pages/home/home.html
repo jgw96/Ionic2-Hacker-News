@@ -7,6 +7,7 @@
 <ion-content class="home">
   <ion-list>
     <ion-item *ngFor="let story of stories">
+      <ion-icon (click)="share(story.url)" id="shareButton" name="share"></ion-icon>
       <div (click)="open(story.url)">
         <h2>{{story.title}}</h2>
         <h3>Author: {{story.by}} on {{story.time | unixDate | date}}</h3>

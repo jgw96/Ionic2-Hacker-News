@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { NavController, Loading } from 'ionic-angular';
+import { Component } from "@angular/core";
+import { NavController, Loading } from "ionic-angular";
+import { SocialSharing } from "ionic-native";
 
 import { StoriesService } from "../../providers/stories/stories";
 
@@ -42,7 +43,11 @@ export class AboutPage {
       )
   }
 
-  goTo(site: string) {
+  private goTo(site: string) {
     window.open(site);
+  }
+
+  private share(url: string) {
+    SocialSharing.share("Looking for a job?", null, null, url);
   }
 }
