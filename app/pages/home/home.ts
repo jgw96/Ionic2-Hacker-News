@@ -160,7 +160,7 @@ export class HomePage {
                   this.storiesService.getStory(story)
                     .subscribe(
                     story => {
-                      if (story.title.includes(data.term)) {
+                      if (story.title.toLowerCase().includes(data.term.toLowerCase())) {
                         console.log(story);
                         this.stories.push({ data: story, id: id });
                       }
