@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
-import { Observable }     from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -10,7 +10,9 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class StoriesService {
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+
+  }
 
   public getStories(): Observable<any> {
     return this.http.get("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty")

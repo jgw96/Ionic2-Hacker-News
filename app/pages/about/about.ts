@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { NavController, Loading } from "ionic-angular";
+import { NavController, LoadingController } from "ionic-angular";
 import { SocialSharing } from "ionic-native";
 
 import { StoriesService } from "../../providers/stories/stories";
@@ -12,35 +12,37 @@ export class AboutPage {
 
   jobs: any[];
 
-  constructor(private navController: NavController, private storiesService: StoriesService) {
+  constructor(private navController: NavController, private storiesService: StoriesService, private loading: LoadingController) {
     this.jobs = [];
   }
 
   ionViewDidEnter() {
-    let loading = Loading.create({
+    let loading = this.loading.create({
       content: "Getting Jobs..."
     });
-    this.storiesService.getJobStories()
-      .subscribe(
+    loading.present().then(() => {
+      this.storiesService.getJobStories()
+        .subscribe(
         data => {
           data.forEach((id) => {
             this.storiesService.getStory(id)
               .subscribe(
-                data => {
-                  console.log(data);
-                  this.jobs.push(data);
-                  loading.dismiss();
-                },
-                err => {
-                  console.log(err)
-                }
+              data => {
+                console.log(data);
+                this.jobs.push(data);
+                loading.dismiss();
+              },
+              err => {
+                console.log(err)
+              }
               )
           })
         },
         err => {
           console.log(err)
         }
-      )
+        )
+    })
   }
 
   private goTo(site: string) {
