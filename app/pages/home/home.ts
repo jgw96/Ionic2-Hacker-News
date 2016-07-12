@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController} from 'ionic-angular';
+import { NavController, LoadingController, AlertController} from 'ionic-angular';
 import { SocialSharing } from 'ionic-native';
 
 import { StoriesService } from '../../providers/stories/stories';
@@ -20,7 +20,8 @@ export class HomePage {
 
   constructor(private nav: NavController,
     private storiesService: StoriesService,
-    private loading: LoadingController) {
+    private loading: LoadingController,
+    private alert: AlertController) {
     this.stories = [];
   }
 
@@ -57,6 +58,32 @@ export class HomePage {
           )
       })
     }
+  }
+
+  private fillStories() {
+    let loading = this.loading.create({
+      content: "Getting Stories...",
+    });
+    loading.present().then(() => {
+      this.stories = [];
+      this.storiesService.getStories()
+        .subscribe(
+        stories => {
+          for (let i = 0; i < 20; i++) {
+              let id = stories[i]
+              this.storiesService.getStory(stories[i])
+                .subscribe(
+                data => {
+                  this.stories.push({ data: data, id: id });
+                  loading.dismiss();
+                  this.storiesRetreived = this.stories;
+                }
+                )
+            }
+        },
+        err => console.error(err)
+        )
+    })
   }
 
   private getComments(data: any): void {
@@ -99,6 +126,55 @@ export class HomePage {
         return (item.data.title.toLowerCase().indexOf(searchValue.toLowerCase()) > -1);
       })
     }
+  }
+
+  private search() {
+    let alert = this.alert.create({
+      title: 'Search',
+      inputs: [
+        {
+          name: 'term',
+          placeholder: 'Typescript'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+            this.fillStories();
+          }
+        },
+        {
+          text: 'Search',
+          handler: data => {
+            alert.dismiss();
+            this.stories = [];
+            console.log(data);
+            this.storiesService.getStories()
+              .subscribe(
+              stories => {
+                stories.forEach((story) => {
+                  let id = story;
+                  this.storiesService.getStory(story)
+                    .subscribe(
+                    story => {
+                      if (story.title.includes(data.term)) {
+                        console.log(story);
+                        this.stories.push({ data: story, id: id });
+                      }
+                    }
+                    )
+                })
+              },
+              err => alert.dismiss()
+              )
+          }
+        }
+      ]
+    })
+    alert.present();
   }
 
 }
