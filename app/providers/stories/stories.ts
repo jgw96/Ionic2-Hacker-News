@@ -15,13 +15,13 @@ export class StoriesService {
   }
 
   public getStories(): Observable<any> {
-    return this.http.get("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty")
+    return this.http.get('https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   public getJobStories(): Observable<any> {
-    return this.http.get("https://hacker-news.firebaseio.com/v0/jobstories.json?print=pretty")
+    return this.http.get('https://hacker-news.firebaseio.com/v0/jobstories.json?print=pretty')
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -29,7 +29,7 @@ export class StoriesService {
   public getStory(storyId: number): Observable<any> {
     return this.http.get(`https://hacker-news.firebaseio.com/v0/item/${storyId}.json?print=pretty`)
       .map(this.extractData)
-      .catch(this.handleError)
+      .catch(this.handleError);
   }
 
   private extractData(res: Response) {

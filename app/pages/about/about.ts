@@ -1,8 +1,8 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 import { NavController, LoadingController } from "ionic-angular";
-import { SocialSharing } from "ionic-native";
+import { SocialSharing } from 'ionic-native';
 
-import { StoriesService } from "../../providers/stories/stories";
+import { StoriesService } from '../../providers/stories/stories';
 
 @Component({
   templateUrl: 'build/pages/about/about.html',
@@ -18,13 +18,13 @@ export class AboutPage {
 
   ionViewDidEnter() {
     let loading = this.loading.create({
-      content: "Getting Jobs..."
+      content: 'Getting Jobs...'
     });
     loading.present().then(() => {
       this.storiesService.getJobStories()
         .subscribe(
         data => {
-          data.forEach((id) => {
+          data.forEach((id: any) => {
             this.storiesService.getStory(id)
               .subscribe(
               data => {
@@ -33,16 +33,16 @@ export class AboutPage {
                 loading.dismiss();
               },
               err => {
-                console.log(err)
+                console.log(err);
               }
-              )
-          })
+              );
+          });
         },
         err => {
-          console.log(err)
+          console.log(err);
         }
-        )
-    })
+        );
+    });
   }
 
   private goTo(site: string) {
@@ -50,6 +50,6 @@ export class AboutPage {
   }
 
   private share(url: string) {
-    SocialSharing.share("Looking for a job?", null, null, url);
+    SocialSharing.share('Looking for a job?', null, null, url);
   }
 }

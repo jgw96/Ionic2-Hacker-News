@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { StoriesService } from "../../providers/stories/stories";
+import { StoriesService } from '../../providers/stories/stories';
 
 /*
   Generated class for the CommentsPage page.
@@ -22,8 +22,8 @@ export class CommentsPage {
   }
 
   ionViewDidEnter() {
-    let data = this.navParams.get("data");
-    data.forEach((id) => {
+    let data = this.navParams.get('data');
+    data.forEach((id: any) => {
       this.storiesService.getStory(id)
         .subscribe(
           data => {
@@ -33,8 +33,8 @@ export class CommentsPage {
           error => {
             console.log(error);
           }
-        )
-    })
+        );
+    });
   }
 
 }

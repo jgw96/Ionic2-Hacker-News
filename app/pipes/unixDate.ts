@@ -15,7 +15,7 @@ export class UnixDate {
     Takes a value and makes it lowercase.
    */
   transform(value: number, args: any[]) {
-    let date = new Date(value * 1000)
+    let date = new Date(value * 1000);
     return date;
   }
 }

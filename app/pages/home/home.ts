@@ -26,11 +26,11 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
-    if (sessionStorage.getItem("loaded") === "true") {
+    if (sessionStorage.getItem('loaded') === 'true') {
       return;
     } else {
       let loading = this.loading.create({
-        content: "Getting Stories...",
+        content: 'Getting Stories...',
       });
 
       loading.present().then(() => {
@@ -47,7 +47,7 @@ export class HomePage {
                   this.stories.push({ data: data, id: id });
                   loading.dismiss();
                   this.storiesRetreived = this.stories;
-                  sessionStorage.setItem("loaded", "true");
+                  sessionStorage.setItem('loaded', 'true');
                 }
                 )
             }
@@ -62,7 +62,7 @@ export class HomePage {
 
   private fillStories() {
     let loading = this.loading.create({
-      content: "Getting Stories...",
+      content: 'Getting Stories...',
     });
     loading.present().then(() => {
       this.stories = [];
@@ -70,20 +70,20 @@ export class HomePage {
         .subscribe(
         stories => {
           for (let i = 0; i < 20; i++) {
-              let id = stories[i]
-              this.storiesService.getStory(stories[i])
-                .subscribe(
-                data => {
-                  this.stories.push({ data: data, id: id });
-                  loading.dismiss();
-                  this.storiesRetreived = this.stories;
-                }
-                )
-            }
+            let id = stories[i];
+            this.storiesService.getStory(stories[i])
+              .subscribe(
+              data => {
+                this.stories.push({ data: data, id: id });
+                loading.dismiss();
+                this.storiesRetreived = this.stories;
+              }
+              );
+          }
         },
         err => console.error(err)
-        )
-    })
+        );
+    });
   }
 
   private getComments(data: any): void {
@@ -114,14 +114,14 @@ export class HomePage {
   }
 
   private share(url: string) {
-    SocialSharing.share("Check out this cool article!", null, null, url);
+    SocialSharing.share('Check out this cool article!', null, null, url);
   }
 
   private searchItems(event: any) {
     this.stories = this.storiesRetreived;
     let searchValue = event.target.value;
 
-    if (searchValue && searchValue.trim() != '') {
+    if (searchValue && searchValue.trim() !== '') {
       this.stories = this.stories.filter((item) => {
         return (item.data.title.toLowerCase().indexOf(searchValue.toLowerCase()) > -1);
       })
@@ -141,21 +141,21 @@ export class HomePage {
         {
           text: 'Cancel',
           role: 'cancel',
-          handler: data => {
+          handler: (data: any) => {
             console.log('Cancel clicked');
-            this.fillStories();
+            this.fillStories(); 
           }
         },
         {
           text: 'Search',
-          handler: data => {
+          handler: (data: any) => {
             alert.dismiss();
             this.stories = [];
             console.log(data);
             this.storiesService.getStories()
               .subscribe(
               stories => {
-                stories.forEach((story) => {
+                stories.forEach((story: any) => {
                   let id = story;
                   this.storiesService.getStory(story)
                     .subscribe(
@@ -165,11 +165,11 @@ export class HomePage {
                         this.stories.push({ data: story, id: id });
                       }
                     }
-                    )
-                })
+                    );
+                });
               },
               err => alert.dismiss()
-              )
+              );
           }
         }
       ]

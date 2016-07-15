@@ -17,6 +17,7 @@
     "zone.js": "^0.6.12"
   },
   "devDependencies": {
+    "codelyzer": "0.0.25",
     "del": "2.2.0",
     "gulp": "3.9.1",
     "gulp-watch": "4.3.5",
@@ -25,7 +26,9 @@
     "ionic-gulp-html-copy": "^1.0.0",
     "ionic-gulp-sass-build": "^1.0.0",
     "ionic-gulp-scripts-copy": "^2.0.0",
-    "run-sequence": "1.1.5"
+    "tslint-ionic-rules": "0.0.3",
+    "run-sequence": "1.1.5",
+    "ionic-gulp-tslint": "1.0.0"
   },
   "cordovaPlugins": [
     "cordova-plugin-device",

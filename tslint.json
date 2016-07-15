@@ -1,0 +1,7 @@
+{
+    "rulesDirectory": [
+        "node_modules/codelyzer",
+        "node_modules/tslint-ionic-rules"
+    ],
+    "rules": {}
+}
