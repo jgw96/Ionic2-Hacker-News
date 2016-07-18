@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, LoadingController, AlertController} from 'ionic-angular';
 import { SocialSharing } from 'ionic-native';
 
@@ -11,7 +11,7 @@ import { UnixDate } from '../../pipes/unixDate';
   providers: [StoriesService],
   pipes: [UnixDate]
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
   stories: any[];
   storyIDs: any;
@@ -23,6 +23,10 @@ export class HomePage {
     private loading: LoadingController,
     private alert: AlertController) {
     this.stories = [];
+  }
+
+  ngOnInit() {
+    console.log("ngoninit fired");
   }
 
   ionViewDidEnter() {
