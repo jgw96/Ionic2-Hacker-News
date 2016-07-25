@@ -20,6 +20,18 @@ export class StoriesService {
       .catch(this.handleError);
   }
 
+  public getAskStories(): Observable<any> {
+    return this.http.get('https://hacker-news.firebaseio.com/v0/askstories.json?print=pretty')
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+
+  public getShowStories(): Observable<any> {
+    return this.http.get('https://hacker-news.firebaseio.com/v0/showstories.json?print=pretty')
+      .map(this.extractData)
+      .catch(this.handleError)
+  }
+
   public getJobStories(): Observable<any> {
     return this.http.get('https://hacker-news.firebaseio.com/v0/jobstories.json?print=pretty')
       .map(this.extractData)

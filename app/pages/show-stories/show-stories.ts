@@ -6,20 +6,25 @@ import { StoriesService } from '../../providers/stories/stories';
 import { CommentsPage } from '../../pages/comments/comments';
 import { UnixDate } from '../../pipes/unixDate';
 
+/*
+  Generated class for the AskStoriesPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+*/
 @Component({
-  templateUrl: 'build/pages/home/home.html',
+  templateUrl: 'build/pages/show-stories/show-stories.html',
   providers: [StoriesService],
   pipes: [UnixDate]
 })
-export class HomePage {
+export class ShowStoriesPage {
 
   stories: any[];
   storyIDs: any;
   previousIndex: number;
   storiesRetreived: any[];
 
-  constructor(private nav: NavController,
-    private storiesService: StoriesService) {
+  constructor(private nav: NavController, private storiesService: StoriesService) {
     this.stories = [];
   }
 
@@ -29,7 +34,7 @@ export class HomePage {
     });
 
     this.nav.present(loading).then(() => {
-      this.storiesService.getStories()
+      this.storiesService.getShowStories()
         .subscribe(
         (data: any) => {
           this.storyIDs = data;
@@ -60,7 +65,7 @@ export class HomePage {
     });
     this.nav.present(loading).then(() => {
       this.stories = [];
-      this.storiesService.getStories()
+      this.storiesService.getShowStories()
         .subscribe(
         (stories: any[]) => {
           for (let i = 0; i < 20; i++) {

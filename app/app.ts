@@ -1,18 +1,33 @@
-import {Component} from '@angular/core';
-import {Platform, ionicBootstrap} from 'ionic-angular';
-import {StatusBar} from 'ionic-native';
-import {TabsPage} from './pages/tabs/tabs';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, ionicBootstrap, Nav } from 'ionic-angular';
+import { StatusBar } from 'ionic-native';
+
+import { HomePage } from './pages/home/home';
+import { AboutPage } from './pages/about/about';
+import { AskStoriesPage } from './pages/ask-stories/ask-stories';
+import { ShowStoriesPage } from './pages/show-stories/show-stories';
 
 
 @Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'
+  templateUrl: 'build/app.html'
 })
 export class MyApp {
-
-  private rootPage:any;
+  
+  @ViewChild(Nav) nav: Nav;
+  private rootPage: any = HomePage;
+  pages: Array<{title: string, component: any}>;
 
   constructor(private platform:Platform) {
-    this.rootPage = TabsPage;
+
+    this.initializeApp();
+
+    // used for an example of ngFor and navigation
+    this.pages = [
+      { title: 'Top Stories', component: HomePage },
+      { title: 'Ask Stories', component: AskStoriesPage },
+      { title: 'Show Stories', component: ShowStoriesPage },
+      { title: 'Jobs', component: AboutPage }
+    ];
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -20,6 +35,21 @@ export class MyApp {
       StatusBar.styleDefault();
     });
   }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      StatusBar.styleDefault();
+    });
+  }
+
+  openPage(page: any) {
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    this.nav.setRoot(page.component);
+  }
+  
 }
 
 ionicBootstrap(MyApp);
