@@ -13,7 +13,7 @@
   </ion-toolbar>
   <ion-list>
     <ion-item *ngFor="let story of stories">
-      <ion-icon (click)="share(story.data.url)" id="shareButton" name="share"></ion-icon>
+      <!--<ion-icon (click)="share(story.data.url)" id="shareButton" name="share"></ion-icon>-->
       <div (click)="open(story.data.url)">
         <h2>{{story.data.title}}</h2>
         <h3>Author: {{story.data.by}} on {{story.data.time | unixDate | date}}</h3>
