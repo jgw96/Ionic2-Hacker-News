@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, enableProdMode } from '@angular/core';
 import { Platform, ionicBootstrap, Nav } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
@@ -6,6 +6,8 @@ import { HomePage } from './pages/home/home';
 import { AboutPage } from './pages/about/about';
 import { AskStoriesPage } from './pages/ask-stories/ask-stories';
 import { ShowStoriesPage } from './pages/show-stories/show-stories';
+
+enableProdMode();
 
 
 @Component({
