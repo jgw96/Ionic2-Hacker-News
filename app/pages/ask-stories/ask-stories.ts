@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Loading, Alert} from 'ionic-angular';
+import { NavController, LoadingController, AlertController} from 'ionic-angular';
 import { SocialSharing } from 'ionic-native';
 
 import { StoriesService } from '../../providers/stories/stories';
@@ -24,16 +24,21 @@ export class AskStoriesPage {
   previousIndex: number;
   storiesRetreived: any[];
 
-  constructor(private nav: NavController, private storiesService: StoriesService) {
+  constructor(
+    private nav: NavController, 
+    private storiesService: StoriesService,
+    private loadCtrl: LoadingController,
+    private alertCtrl: AlertController
+    ) {
     this.stories = [];
   }
 
   ionViewDidEnter() {
-    let loading = Loading.create({
+    let loading = this.loadCtrl.create({
       content: 'Getting Stories...',
     });
 
-    this.nav.present(loading).then(() => {
+    loading.present().then(() => {
       this.storiesService.getAskStories()
         .subscribe(
         (data: any) => {
@@ -60,10 +65,10 @@ export class AskStoriesPage {
   }
 
   private fillStories() {
-    let loading = Loading.create({
+    let loading = this.loadCtrl.create({
       content: 'Getting Stories...',
     });
-    this.nav.present(loading).then(() => {
+    loading.present().then(() => {
       this.stories = [];
       this.storiesService.getAskStories()
         .subscribe(
