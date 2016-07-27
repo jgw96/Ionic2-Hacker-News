@@ -13,7 +13,7 @@
   </ion-toolbar>
   <ion-list>
     <ion-item-sliding #slidingItem *ngFor="let story of stories">
-      <button ion-item (click)="open(slidingItem)">
+      <button ion-item (click)="open(story.data.url)">
         <!--<ion-icon (click)="share(story.data.url)" id="shareButton" name="share"></ion-icon>-->
         <div>
           <h2>{{story.data.title}}</h2>
