@@ -12,18 +12,21 @@
     <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
   </ion-toolbar>
   <ion-list>
-    <ion-item *ngFor="let story of stories">
-      <!--<ion-icon (click)="share(story.data.url)" id="shareButton" name="share"></ion-icon>-->
-      <div (click)="open(story.data.url)">
-        <h2>{{story.data.title}}</h2>
-        <h3>Author: {{story.data.by}} on {{story.data.time | unixDate | date}}</h3>
-        <p>{{story.data.url}}</p>
-      </div>
-
-      <button *ngIf="story.data.kids" id="commentsButton" (click)="getComments(story.data.kids)" clear primary>
+    <ion-item-sliding #slidingItem *ngFor="let story of stories">
+      <button ion-item (click)="open(slidingItem)">
+        <!--<ion-icon (click)="share(story.data.url)" id="shareButton" name="share"></ion-icon>-->
+        <div>
+          <h2>{{story.data.title}}</h2>
+          <h3>Author: {{story.data.by}} on {{story.data.time | unixDate | date}}</h3>
+          <p>{{story.data.url}}</p>
+        </div>
+      </button>
+      <ion-item-options>
+        <button *ngIf="story.data.kids" id="commentsButton" (click)="getComments(story.data.kids)" primary>
         {{story.data.kids.length}} Comments
       </button>
-    </ion-item>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController} from 'ionic-angular';
+import { NavController, LoadingController, AlertController, ItemSliding} from 'ionic-angular';
 import { SocialSharing } from 'ionic-native';
 
 import { StoriesService } from '../../providers/stories/stories';
