@@ -291,6 +291,7 @@ ion-content.js-scroll > scroll-content {
 
 [nav-viewport],
 [nav-portal],
+[tab-portal],
 .nav-decor {
   display: none; }
 
@@ -798,6 +799,16 @@ ion-loading {
 ion-menu {
   position: absolute;
   top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none; }
+  ion-menu.show-menu {
+    display: block; }
+
+.menu-inner {
+  position: absolute;
+  top: 0;
   right: auto;
   bottom: 0;
   left: 0;
@@ -814,18 +825,19 @@ ion-menu {
   -webkit-transform: translate3d(-9999px, 0, 0);
   transform: translate3d(-9999px, 0, 0); }
 
-ion-menu > ion-header,
-ion-menu > ion-content,
-ion-menu > ion-footer {
+.menu-inner > ion-header,
+.menu-inner > ion-content,
+.menu-inner > ion-footer {
   position: relative; }
 
-ion-menu[side=right] {
+ion-menu[side=right] > .menu-inner {
   right: 0;
   left: auto; }
 
 ion-menu ion-backdrop {
   z-index: -1;
-  display: none; }
+  display: none;
+  opacity: .1; }
 
 .menu-content {
   -webkit-transform: translate3d(0, 0, 0);
@@ -837,25 +849,20 @@ ion-menu ion-backdrop {
   pointer-events: none; }
 
 @media (max-width: 340px) {
-  ion-menu {
+  .menu-inner {
     width: 264px; } }
 
-ion-menu[type=reveal].show-menu {
+ion-menu[type=reveal] {
+  z-index: 0; }
+
+ion-menu[type=reveal].show-menu .menu-inner {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0); }
 
 ion-menu[type=overlay] {
   z-index: 80; }
-  ion-menu[type=overlay] ion-backdrop {
-    left: -3000px;
-    display: block;
-    width: 6000px;
-    opacity: .01;
-    -webkit-transform: translate3d(-9999px, 0, 0);
-    transform: translate3d(-9999px, 0, 0); }
-    ion-menu[type=overlay] ion-backdrop.show-backdrop {
-      -webkit-transform: translate3d(0, 0, 0);
-      transform: translate3d(0, 0, 0); }
+  ion-menu[type=overlay] .show-backdrop {
+    display: block; }
 
 ion-modal {
   position: absolute;
@@ -6646,7 +6653,7 @@ ion-loading {
 .loading-spinner .spinner-dots circle {
   fill: #69717d; }
 
-ion-menu {
+.menu-inner {
   background: #fff; }
 
 .menu-content-reveal {
@@ -6655,7 +6662,7 @@ ion-menu {
 .menu-content-push {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25); }
 
-ion-menu[type=overlay] {
+ion-menu[type=overlay] .menu-inner {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25); }
 
 .modal-wrapper {
@@ -8667,6 +8674,7 @@ ion-buttons[right] {
 ion-nav > ion-page > .toolbar.statusbar-padding:first-child,
 ion-nav > ion-page > ion-header > .toolbar.statusbar-padding:first-child,
 ion-tab > ion-page > ion-header > .toolbar.statusbar-padding:first-child,
+ion-tabs > ion-page.tab-subpage > ion-header > .toolbar.statusbar-padding:first-child,
 ion-menu > .toolbar.statusbar-padding:first-child {
   padding-top: 20px;
   height: calc(44px + 20px);
@@ -8675,6 +8683,7 @@ ion-menu > .toolbar.statusbar-padding:first-child {
 ion-nav > ion-page > ion-content.statusbar-padding:first-child scroll-content,
 ion-nav > ion-page > ion-header > ion-content.statusbar-padding:first-child scroll-content,
 ion-tab > ion-page > ion-header > ion-content.statusbar-padding:first-child scroll-content,
+ion-tabs > ion-page.tab-subpage > ion-header > ion-content.statusbar-padding:first-child scroll-content,
 ion-menu > ion-content.statusbar-padding:first-child scroll-content {
   padding-top: 20px; }
 
@@ -8684,6 +8693,8 @@ ion-nav > ion-page > ion-header > ion-content.statusbar-padding:first-child[padd
 ion-nav > ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] scroll-content,
 ion-tab > ion-page > ion-header > ion-content.statusbar-padding:first-child[padding] scroll-content,
 ion-tab > ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] scroll-content,
+ion-tabs > ion-page.tab-subpage > ion-header > ion-content.statusbar-padding:first-child[padding] scroll-content,
+ion-tabs > ion-page.tab-subpage > ion-header > ion-content.statusbar-padding:first-child[padding-top] scroll-content,
 ion-menu > ion-content.statusbar-padding:first-child[padding] scroll-content,
 ion-menu > ion-content.statusbar-padding:first-child[padding-top] scroll-content {
   padding-top: calc(16px + 20px); }
@@ -8694,6 +8705,8 @@ ion-nav > ion-page > ion-header > .toolbar.statusbar-padding:first-child ion-seg
 ion-nav > ion-page > ion-header > .toolbar.statusbar-padding:first-child ion-title,
 ion-tab > ion-page > ion-header > .toolbar.statusbar-padding:first-child ion-segment,
 ion-tab > ion-page > ion-header > .toolbar.statusbar-padding:first-child ion-title,
+ion-tabs > ion-page.tab-subpage > ion-header > .toolbar.statusbar-padding:first-child ion-segment,
+ion-tabs > ion-page.tab-subpage > ion-header > .toolbar.statusbar-padding:first-child ion-title,
 ion-menu > .toolbar.statusbar-padding:first-child ion-segment,
 ion-menu > .toolbar.statusbar-padding:first-child ion-title {
   padding-top: 20px;

@@ -27,7 +27,7 @@ export class HomePage {
 
   ionViewDidEnter() {
     let loading = this.loadCtrl.create({
-      content: 'Getting Stories...',
+      content: 'Getting Stories...'
     });
 
     loading.present().then(() => {
@@ -45,12 +45,16 @@ export class HomePage {
                 loading.dismiss();
                 this.storiesRetreived = this.stories;
                 sessionStorage.setItem('loaded', 'true');
+              },
+              error => {
+                loading.dismiss();
               }
               )
           }
         },
         (error: Error) => {
           console.log(error);
+          loading.dismiss();
         }
         )
     })

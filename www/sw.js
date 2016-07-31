@@ -24,91 +24,58 @@
 // cache, then increment the CACHE_VERSION value. It will kick off the service worker update
 // flow and the old cache(s) will be purged as part of the activate event handler when the
 // updated service worker is activated.
-var CACHE_VERSION = 11;
-var CURRENT_CACHES = {
-  font: 'cache' + CACHE_VERSION
-};
+var CACHE_VERSION = 12;
+var cache_name = "main_cache";
 
-self.addEventListener('activate', function(event) {
-  // Delete all caches that aren't named in CURRENT_CACHES.
-  // While there is only one cache in this example, the same logic will handle the case where
-  // there are multiple versioned caches.
-  var expectedCacheNames = Object.keys(CURRENT_CACHES).map(function(key) {
-    return CURRENT_CACHES[key];
-  });
-
-  event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.map(function(cacheName) {
-          if (expectedCacheNames.indexOf(cacheName) === -1) {
-            // If this cache name isn't present in the array of "expected" cache names, then delete it.
-            console.log('Deleting out of date cache:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
+self.addEventListener('install', function (event) {
+  // Perform install steps
+  console.log("Service worker installed");
 });
 
-self.addEventListener('fetch', function(event) {
-  console.log('Handling fetch event for', event.request.url);
+self.addEventListener('activate', function (event) {
+  console.log("Service worker activated");
+});
 
+self.addEventListener('fetch', function (event) {
   event.respondWith(
-    caches.open(CURRENT_CACHES.font).then(function(cache) {
-      return cache.match(event.request).then(function(response) {
+    caches.match(event.request)
+      .then(function (response) {
+        // Cache hit - return response
         if (response) {
-          // If there is an entry in the cache for event.request, then response will be defined
-          // and we can just return it. Note that in this example, only font resources are cached.
-          console.log(' Found response in cache:', response);
-
           return response;
         }
 
-        // Otherwise, if there is no entry in the cache for event.request, response will be
-        // undefined, and we need to fetch() the resource.
-        console.log(' No response for %s found in cache. About to fetch ' +
-          'from network...', event.request.url);
+        // IMPORTANT: Clone the request. A request is a stream and
+        // can only be consumed once. Since we are consuming this
+        // once by cache and once by the browser for fetch, we need
+        // to clone the response
+        var fetchRequest = event.request.clone();
 
-        // We call .clone() on the request since we might use it in a call to cache.put() later on.
-        // Both fetch() and cache.put() "consume" the request, so we need to make a copy.
-        // (see https://fetch.spec.whatwg.org/#dom-request-clone)
-        return fetch(event.request.clone()).then(function(response) {
-          console.log('  Response for %s from network is: %O',
-            event.request.url, response);
+        return fetch(fetchRequest).then(
+          function (response) {
+            // Check if we received a valid response
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
 
-            let testString = 'hacker-news.firebaseio.com';
+            // IMPORTANT: Clone the response. A response is a stream
+            // and because we want the browser to consume the response
+            // as well as the cache consuming the response, we need
+            // to clone it so we have 2 stream.
+            var responseToCache = response.clone();
 
-          if (response.status < 400 && response.url.indexOf(testString) === -1) {
-            // This avoids caching responses that we know are errors (i.e. HTTP status code of 4xx or 5xx).
-            // We also only want to cache responses that correspond to fonts,
-            // i.e. have a Content-Type response header that starts with "font/".
-            // Note that for opaque filtered responses (https://fetch.spec.whatwg.org/#concept-filtered-response-opaque)
-            // we can't access to the response headers, so this check will always fail and the font won't be cached.
-            // All of the Google Web Fonts are served off of a domain that supports CORS, so that isn't an issue here.
-            // It is something to keep in mind if you're attempting to cache other resources from a cross-origin
-            // domain that doesn't support CORS, though!
-            // We call .clone() on the response to save a copy of it to the cache. By doing so, we get to keep
-            // the original response object which we will return back to the controlled page.
-            // (see https://fetch.spec.whatwg.org/#dom-response-clone)
-            console.log('  Caching the response to', event.request.url);
-            cache.put(event.request, response.clone());
-          } else {
-            console.log('  Not caching the response to', event.request.url);
+            caches.open(cache_name)
+              .then(function (cache) {
+                cache.put(event.request, responseToCache);
+              });
+
+            return response;
           }
-
-          // Return the original response object, which will be used to fulfill the resource request.
-          return response;
-        });
-      }).catch(function(error) {
-        // This catch() will handle exceptions that arise from the match() or fetch() operations.
-        // Note that a HTTP error response (e.g. 404) will NOT trigger an exception.
-        // It will return a normal response object that has the appropriate error code set.
-        console.error('  Error in fetch handler:', error);
-
-        throw error;
-      });
-    })
+        ).catch(function(e) {
+          console.log(e);
+        })
+      }).catch(function (e) {
+        console.log(e);
+      })
   );
 });
