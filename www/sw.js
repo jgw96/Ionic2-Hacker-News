@@ -1,4 +1,4 @@
-var CACHE_VERSION = 1;
+var CACHE_VERSION = 2;
 var CURRENT_CACHES = {
   prefetch: 'prefetch-cache-v' + CACHE_VERSION
 };
@@ -7,27 +7,27 @@ self.addEventListener('install', function(event) {
   var now = Date.now();
 
   var urlsToPrefetch = [
-    '/build/app.html',
-    '/build/js/app.bundle.js',,
-    '/build/js/es6-shim.min.js',
-    '/build/js/Reflect.js',
-    '/build/js/zone.js',
-    '/build/fonts/roboto-regular.ttf',
-    '/build/fonts/ionicons.ttf',
-    '/build/css/app.ios.css',
-    '/build/css/app.md.css',
-    '/build/css/app.wp.css',
-    '/img/icon.png',
-    '/build/pages/about/about.html',
-    '/build/pages/ask-stories/ask-stories.html',
-    '/build/pages/comments/comments.html',
-    '/build/pages/home/home.html',
-    '/build/pages/show-stories/show-stories.html',
-    'index.html',
-    '/',
-    '/build/fonts/ionicons.woff2?v=3.0.0-alpha.3',
-    '/build/fonts/roboto-medium.ttf',
-    'manifest.json'
+    './build/app.html',
+    './build/js/app.bundle.js',,
+    './build/js/es6-shim.min.js',
+    './build/js/Reflect.js',
+    './build/js/zone.js',
+    './build/fonts/roboto-regular.ttf',
+    './build/fonts/ionicons.ttf',
+    './build/css/app.ios.css',
+    './build/css/app.md.css',
+    './build/css/app.wp.css',
+    './img/icon.png',
+    './build/pages/about/about.html',
+    './build/pages/ask-stories/ask-stories.html',
+    './build/pages/comments/comments.html',
+    './build/pages/home/home.html',
+    './build/pages/show-stories/show-stories.html',
+    './index.html',
+    './',
+    './build/fonts/ionicons.woff2?v=3.0.0-alpha.3',
+    './build/fonts/roboto-medium.ttf',
+    './manifest.json'
   ];
 
   // All of these logging statements should be visible via the "Inspect" interface
