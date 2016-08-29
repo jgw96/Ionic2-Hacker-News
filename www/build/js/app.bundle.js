@@ -16,7 +16,7 @@ var home_1 = require('./pages/home/home');
 var about_1 = require('./pages/about/about');
 var ask_stories_1 = require('./pages/ask-stories/ask-stories');
 var show_stories_1 = require('./pages/show-stories/show-stories');
-//enableProdMode();
+core_1.enableProdMode();
 var MyApp = (function () {
     function MyApp(platform) {
         this.platform = platform;

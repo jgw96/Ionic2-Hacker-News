@@ -11,10 +11,10 @@ worker = require('@angular/service-worker');
  * Add ':before' or ':after' to any Ionic project command name to run the specified
  * tasks before or after the command.
  */
-gulp.task('serve:before', ['watch']);
+gulp.task('serve:before', ['watch', 'worker']);
 gulp.task('emulate:before', ['build']);
 gulp.task('deploy:before', ['build']);
-gulp.task('build:before', ['build']);
+gulp.task('build:before', ['build', 'worker']);
 
 // we want to 'watch' when livereloading
 var shouldWatch = argv.indexOf('-l') > -1 || argv.indexOf('--livereload') > -1;
@@ -65,7 +65,7 @@ gulp.task('build', ['clean'], function (done) {
   );
 });
 
-gulp.task('worker', function (done) {
+gulp.task('worker', ['build-worker'], function (done) {
   worker.gulpGenManifest({
     group: [
       {
@@ -90,6 +90,14 @@ gulp.task('worker', function (done) {
     ]
   }).pipe(gulp.dest('www'))
     .on('end', done);
+});
+
+gulp.task('build-worker', function (done) {
+  gulp.src([
+    'node_modules/@angular/service-worker/dist/worker.js'
+  ])
+  .pipe((gulp.dest('www')))
+  .on('end', done);
 });
 
 gulp.task('sass', buildSass);
