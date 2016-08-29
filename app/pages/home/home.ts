@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController, ItemSliding} from 'ionic-angular';
+import { NavController, LoadingController, AlertController, ActionSheetController, ItemSliding } from 'ionic-angular';
 import { SocialSharing } from 'ionic-native';
 
 import { StoriesService } from '../../providers/stories/stories';
@@ -18,46 +18,52 @@ export class HomePage {
   previousIndex: number;
   storiesRetreived: any[];
 
-  constructor(private nav: NavController,
+  constructor(
+    private nav: NavController,
     private storiesService: StoriesService,
     private loadCtrl: LoadingController,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    private actionCtrl: ActionSheetController) {
     this.stories = [];
   }
 
   ionViewDidEnter() {
-    let loading = this.loadCtrl.create({
-      content: 'Getting Stories...'
-    });
+    try {
+      let loading = this.loadCtrl.create({
+        content: 'Getting Stories...'
+      });
 
-    loading.present().then(() => {
-      this.storiesService.getStories()
-        .subscribe(
-        (data: any) => {
-          this.storyIDs = data;
-          this.previousIndex = this.storyIDs.length - 20;
-          for (let i = 0; i < 20; i++) {
-            let id = data[i]
-            this.storiesService.getStory(data[i])
-              .subscribe(
-              (data: any) => {
-                this.stories.push({ data: data, id: id });
-                loading.dismiss();
-                this.storiesRetreived = this.stories;
-                sessionStorage.setItem('loaded', 'true');
-              },
-              error => {
-                loading.dismiss();
-              }
-              )
+      loading.present().then(() => {
+        this.storiesService.getStories()
+          .subscribe(
+          (data: any) => {
+            this.storyIDs = data;
+            this.previousIndex = this.storyIDs.length - 20;
+            for (let i = 0; i < 20; i++) {
+              let id = data[i]
+              this.storiesService.getStory(data[i])
+                .subscribe(
+                (data: any) => {
+                  this.stories.push({ data: data, id: id });
+                  loading.dismiss();
+                  this.storiesRetreived = this.stories;
+                  sessionStorage.setItem('loaded', 'true');
+                },
+                error => {
+                  loading.dismiss();
+                }
+                )
+            }
+          },
+          (error: Error) => {
+            console.log(error);
+            loading.dismiss();
           }
-        },
-        (error: Error) => {
-          console.log(error);
-          loading.dismiss();
-        }
-        )
-    })
+          )
+      })
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   private fillStories() {
@@ -86,12 +92,11 @@ export class HomePage {
     });
   }
 
-  private getComments(data: any): void {
-    console.log(data);
+  private getComments(data: any) {
     this.nav.push(CommentsPage, { data: data });
   }
 
-  private open(url: string) {;
+  private open(url: string) {
     window.open(url);
   }
 

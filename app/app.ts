@@ -1,4 +1,5 @@
 import { Component, ViewChild, enableProdMode } from '@angular/core';
+import { Http } from '@angular/http';
 import { Platform, ionicBootstrap, Nav } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
@@ -7,19 +8,18 @@ import { AboutPage } from './pages/about/about';
 import { AskStoriesPage } from './pages/ask-stories/ask-stories';
 import { ShowStoriesPage } from './pages/show-stories/show-stories';
 
-enableProdMode();
-
+//enableProdMode();
 
 @Component({
   templateUrl: 'build/app.html'
 })
 export class MyApp {
-  
+
   @ViewChild(Nav) nav: Nav;
   private rootPage: any = HomePage;
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
 
-  constructor(private platform:Platform) {
+  constructor(private platform: Platform) {
 
     this.initializeApp();
 
@@ -51,7 +51,7 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
-  
+
 }
 
 ionicBootstrap(MyApp);

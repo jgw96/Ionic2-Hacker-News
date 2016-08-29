@@ -17,7 +17,10 @@ export class CommentsPage {
 
   comments: any[];
 
-  constructor(private nav: NavController, private navParams: NavParams, private storiesService: StoriesService) {
+  constructor(
+    private nav: NavController,
+    private navParams: NavParams,
+    private storiesService: StoriesService) {
     this.comments = [];
   }
 
@@ -26,13 +29,13 @@ export class CommentsPage {
     data.forEach((id: any) => {
       this.storiesService.getStory(id)
         .subscribe(
-          data => {
-            console.log(data);
-            this.comments.push(data);
-          },
-          error => {
-            console.log(error);
-          }
+        data => {
+          console.log(data);
+          this.comments.push(data);
+        },
+        error => {
+          console.log(error);
+        }
         );
     });
   }
