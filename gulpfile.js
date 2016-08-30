@@ -3,7 +3,6 @@ var gulp = require('gulp'),
   del = require('del'),
   runSequence = require('run-sequence'),
   argv = process.argv;
-worker = require('@angular/service-worker');
 
 
 /**
@@ -34,6 +33,7 @@ var copyHTML = require('ionic-gulp-html-copy');
 var copyFonts = require('ionic-gulp-fonts-copy');
 var copyScripts = require('ionic-gulp-scripts-copy');
 var tsLint = require('ionic-gulp-tslint');
+var worker = require('ionic-gulp-service-worker');
 
 var isRelease = argv.indexOf('--release') > -1;
 
@@ -65,41 +65,6 @@ gulp.task('build', ['clean'], function (done) {
   );
 });
 
-gulp.task('worker', ['build-worker'], function (done) {
-  worker.gulpGenManifest({
-    group: [
-      {
-        name: 'html',
-        sources: gulp.src('./www/*.html')
-      }, {
-        name: 'app',
-        sources: gulp.src('./www/**/*.html')
-      }, {
-        name: 'js',
-        sources: gulp.src('./www/*/**/*.js')
-      }, {
-        name: 'css',
-        sources: gulp.src('./www/**/*.css')
-      }, {
-        name: 'woff',
-        sources: gulp.src('./www/**/*.woff')
-      }, {
-        name: 'ttf',
-        sources: gulp.src('./www/**/*.ttf')
-      }
-    ]
-  }).pipe(gulp.dest('www'))
-    .on('end', done);
-});
-
-gulp.task('build-worker', function (done) {
-  gulp.src([
-    'node_modules/@angular/service-worker/dist/worker.js'
-  ])
-  .pipe((gulp.dest('www')))
-  .on('end', done);
-});
-
 gulp.task('sass', buildSass);
 gulp.task('html', copyHTML);
 gulp.task('fonts', copyFonts);
@@ -108,3 +73,4 @@ gulp.task('clean', function () {
   return del('www/build');
 });
 gulp.task("tslint", tsLint);
+gulp.task('worker', worker);

@@ -45,11 +45,12 @@ export class HomePage {
                 .subscribe(
                 (data: any) => {
                   this.stories.push({ data: data, id: id });
-                  loading.dismiss();
                   this.storiesRetreived = this.stories;
                   sessionStorage.setItem('loaded', 'true');
                 },
                 error => {
+                  loading.dismiss();
+                }, () => {
                   loading.dismiss();
                 }
                 )
@@ -119,7 +120,7 @@ export class HomePage {
   }
 
   private share(url: string) {
-    SocialSharing.share('Check out this cool article!', null, null, url);
+    window.open(`http://twitter.com/share?text=Check out this cool article I found on ionicHN!&url=${url}&hashtags=ionicHN`)
   }
 
   private searchItems(event: any) {

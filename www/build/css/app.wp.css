@@ -9191,6 +9191,9 @@ body {
 .about #shareButton {
   float: right; }
 
+.about ion-item-sliding {
+  contain: paint layout; }
+
 .home ion-label {
   white-space: normal; }
 
@@ -9202,5 +9205,14 @@ body {
 .home #shareButton {
   float: right; }
 
+.home ion-item-sliding {
+  contain: paint layout; }
+
 .comments ion-label {
   white-space: normal; }
+
+.ask-stories ion-item-sliding {
+  contain: paint layout; }
+
+.show-stories ion-item-sliding {
+  contain: paint layout; }

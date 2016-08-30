@@ -6,4 +6,8 @@
     #shareButton {
         float: right;
     }
+
+    ion-item-sliding {
+        contain: paint layout;
+    }
 }

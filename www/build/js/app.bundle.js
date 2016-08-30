@@ -137,7 +137,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var ionic_angular_1 = require('ionic-angular');
-var ionic_native_1 = require('ionic-native');
 var stories_1 = require('../../providers/stories/stories');
 var comments_1 = require('../../pages/comments/comments');
 var unixDate_1 = require('../../pipes/unixDate');
@@ -234,7 +233,7 @@ var AskStoriesPage = (function () {
         this.previousIndex = newIndex;
     };
     AskStoriesPage.prototype.share = function (url) {
-        ionic_native_1.SocialSharing.share('Check out this cool article!', null, null, url);
+        window.open("http://twitter.com/share?text=Check out this cool article I found on ionicHN!&url=" + url + "&hashtags=ionicHN");
     };
     AskStoriesPage.prototype.searchItems = function (event) {
         this.stories = this.storiesRetreived;
@@ -257,7 +256,7 @@ var AskStoriesPage = (function () {
 }());
 exports.AskStoriesPage = AskStoriesPage;
 
-},{"../../pages/comments/comments":4,"../../pipes/unixDate":7,"../../providers/stories/stories":8,"@angular/core":156,"ionic-angular":470,"ionic-native":497}],4:[function(require,module,exports){
+},{"../../pages/comments/comments":4,"../../pipes/unixDate":7,"../../providers/stories/stories":8,"@angular/core":156,"ionic-angular":470}],4:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -321,7 +320,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var ionic_angular_1 = require('ionic-angular');
-var ionic_native_1 = require('ionic-native');
 var stories_1 = require('../../providers/stories/stories');
 var comments_1 = require('../../pages/comments/comments');
 var unixDate_1 = require('../../pipes/unixDate');
@@ -350,10 +348,11 @@ var HomePage = (function () {
                         _this.storiesService.getStory(data[i])
                             .subscribe(function (data) {
                             _this.stories.push({ data: data, id: id });
-                            loading_1.dismiss();
                             _this.storiesRetreived = _this.stories;
                             sessionStorage.setItem('loaded', 'true');
                         }, function (error) {
+                            loading_1.dismiss();
+                        }, function () {
                             loading_1.dismiss();
                         });
                     };
@@ -420,7 +419,7 @@ var HomePage = (function () {
         this.previousIndex = newIndex;
     };
     HomePage.prototype.share = function (url) {
-        ionic_native_1.SocialSharing.share('Check out this cool article!', null, null, url);
+        window.open("http://twitter.com/share?text=Check out this cool article I found on ionicHN!&url=" + url + "&hashtags=ionicHN");
     };
     HomePage.prototype.searchItems = function (event) {
         this.stories = this.storiesRetreived;
@@ -443,7 +442,7 @@ var HomePage = (function () {
 }());
 exports.HomePage = HomePage;
 
-},{"../../pages/comments/comments":4,"../../pipes/unixDate":7,"../../providers/stories/stories":8,"@angular/core":156,"ionic-angular":470,"ionic-native":497}],6:[function(require,module,exports){
+},{"../../pages/comments/comments":4,"../../pipes/unixDate":7,"../../providers/stories/stories":8,"@angular/core":156,"ionic-angular":470}],6:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -456,7 +455,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var ionic_angular_1 = require('ionic-angular');
-var ionic_native_1 = require('ionic-native');
 var stories_1 = require('../../providers/stories/stories');
 var comments_1 = require('../../pages/comments/comments');
 var unixDate_1 = require('../../pipes/unixDate');
@@ -553,7 +551,7 @@ var ShowStoriesPage = (function () {
         this.previousIndex = newIndex;
     };
     ShowStoriesPage.prototype.share = function (url) {
-        ionic_native_1.SocialSharing.share('Check out this cool article!', null, null, url);
+        window.open("http://twitter.com/share?text=Check out this cool article I found on ionicHN!&url=" + url + "&hashtags=ionicHN");
     };
     ShowStoriesPage.prototype.searchItems = function (event) {
         this.stories = this.storiesRetreived;
@@ -576,7 +574,7 @@ var ShowStoriesPage = (function () {
 }());
 exports.ShowStoriesPage = ShowStoriesPage;
 
-},{"../../pages/comments/comments":4,"../../pipes/unixDate":7,"../../providers/stories/stories":8,"@angular/core":156,"ionic-angular":470,"ionic-native":497}],7:[function(require,module,exports){
+},{"../../pages/comments/comments":4,"../../pipes/unixDate":7,"../../providers/stories/stories":8,"@angular/core":156,"ionic-angular":470}],7:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
